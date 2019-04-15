@@ -1,0 +1,18 @@
+{
+  "name": "js-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Litvinovich",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "got": "^9.6.0",
+    "image-downloader": "^3.4.2",
+    "opencv4nodejs": "^4.14.1",
+    "pm2": "^3.5.0"
+  }
+}
