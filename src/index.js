@@ -1,6 +1,8 @@
 const express = require('express');
-
+const config = require('config');
 const { fibo } = require('./fibo');
+
+const {History} = require('./db');
 
 const app = express();
 
@@ -11,12 +13,16 @@ app.get('/fibo', async (req, res) => {
     const number = fibo(Number.parseInt(after));
     const hrend = process.hrtime(hrstart);
     console.info('Execution time : %ds %dms', hrend[0], hrend[1] / 1000000);
-
+    await History.create({
+        result: number,
+        createdDate: new Date()
+    });
     res.json({ number });
 });
 
-app.listen(8080, () => {
-    console.log('Application is up and running on port 8080');
+const port = config.get('server.port');
+app.listen(config.get('server.port'), () => {
+    console.log(`Application is up and running on port ${port}`);
 });
 
 //loadtest -c 1 -n 16 --rps 4 http://localhost:8080/fibo?after=39
