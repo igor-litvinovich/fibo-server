@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "10"
+services:
+  - docker
+
+before_install:
+  - ./devops/build_me.sh
+
+script:
+  - npm run test
