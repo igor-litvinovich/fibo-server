@@ -5,8 +5,8 @@ services:
   - docker
 
 before_install:
+  - npm run test
   - chmod +x ./devops/build_me.sh
-  - ./devops/build_me.sh
 
 script:
-  - npm run test
+  - ./devops/build_me.sh
