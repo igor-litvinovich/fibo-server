@@ -1,10 +1,14 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('fibo_db', 'postgres', '090603', {
-    dialect: 'postgres',
-    host: "localhost",
-    port: 5432,
-    logging: false
-});
+const config = require('config');
+
+const sequelize = new Sequelize(config.get('db.name'),
+    config.get('db.username'),
+    config.get('db.password'), {
+        dialect: config.get('db.dialect'),
+        host: config.get('db.host'),
+        port: config.get('db.port'),
+        logging: false
+    });
 
 class History extends Sequelize.Model { }
 History.init({

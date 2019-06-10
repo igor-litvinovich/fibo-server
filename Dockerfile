@@ -1,13 +1,9 @@
-# Specify the image we want to build from.
-# Check out the Docker Hub for additional information and to browse the list of available images:
-# https://hub.docker.com/
-
-# Using an appropriate base image (carbon for dev, alpine for production)
+# Using an appropriate base image
 FROM node:10.15
-
 # Set up entrypoint
 ENTRYPOINT ["sh", "/server/docker-entrypoint.sh"]
-EXPOSE 8080
+#The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. 
+EXPOSE 8080  
 
 # Create app directory
 WORKDIR /server
@@ -18,11 +14,7 @@ WORKDIR /server
 COPY package*.json ./
 
 RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
-# Copy the current directory contents into the container at /boilerplate-back-end-webdo
+# Copy the current directory contents into the container at /server
 COPY . /server
 
 RUN chmod +x docker-entrypoint.sh

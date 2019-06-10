@@ -3,7 +3,7 @@
         "port": 8080
     },
     "db": {
-        "dialect": "portgres",
+        "dialect": "postgres",
         "logging": true
     }
 }

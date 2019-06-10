@@ -1,2 +1,2 @@
 #!/bin/bash
-docker service rm fibo-server_fibo-server
+docker service rm server_name_fibo-server

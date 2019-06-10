@@ -2,9 +2,11 @@ version: '3.4'
 services:
   fibo-server:
     image: igor-litvinovich/fibo-server:latest
-    container_name: fibo-server  
+    environment:
+      NODE_ENV: development
+      DB_HOST: host.docker.internal
     deploy:
-      replicas: 4
+      replicas: 0
       resources:
         limits:
           cpus: '4'
