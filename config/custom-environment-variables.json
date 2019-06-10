@@ -1,0 +1,12 @@
+{
+    "db": {
+        "name": "DB_NAME",
+        "username": "DB_USER",
+        "password": "DB_PASSWORD",
+        "port": "DB_PORT",
+        "host": "DB_HOST"
+    },
+    "server": {
+        "port": "PORT"
+    }
+}

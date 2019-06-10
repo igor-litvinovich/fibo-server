@@ -1,0 +1,9 @@
+{
+    "db": {
+        "name": "fibo_db",
+        "username": "postgres",
+        "password": "090603",
+        "port": 5432,
+        "host": "localhost"
+    }
+}
