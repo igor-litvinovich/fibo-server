@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t igor-litvinovich/fibo-server:latest .
+docker build -t igorlitv/fibo-server:latest .

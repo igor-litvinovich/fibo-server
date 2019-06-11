@@ -6,9 +6,11 @@ services:
 
 before_script:
   - chmod +x ./devops/build_me.sh
+  - chmod +x ./devops/push_me.sh
   - sudo apt-get install -qq sshpass
 
 script:
   - npm run test
   - ./devops/build_me.sh
-  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST $SSH_COMMAND
+  - ./devops/push_me.sh
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST ifconfig

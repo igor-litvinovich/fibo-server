@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   fibo-server:
-    image: igor-litvinovich/fibo-server:latest
+    image: igorlitv/fibo-server:latest
     environment:
       NODE_ENV: development
       DB_HOST: host.docker.internal
