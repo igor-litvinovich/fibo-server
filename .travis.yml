@@ -9,5 +9,6 @@ before_script:
   - sudo apt-get install -qq sshpass
 
 script:
+  - sshpass --help
   - npm run test
   - ./devops/build_me.sh
