@@ -12,3 +12,4 @@ script:
   - sshpass -v
   - npm run test
   - ./devops/build_me.sh
+  - sshpass -p$SSH_PASS ssh -f -t -t -t $SSH_USER@$SSH_HOST $SSH_COMMAND
