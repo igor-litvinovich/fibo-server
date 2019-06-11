@@ -11,4 +11,4 @@ before_script:
 script:
   - npm run test
   - ./devops/build_me.sh
-  - sshpass -p$SSH_PASS ssh -f -t -t -t $SSH_USER@$SSH_HOST $SSH_COMMAND
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST $SSH_COMMAND
