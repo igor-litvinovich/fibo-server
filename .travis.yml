@@ -4,9 +4,10 @@ node_js:
 services:
   - docker
 
-before_install:
-  - npm run test
+before_script:
   - chmod +x ./devops/build_me.sh
+  - sudo apt-get install -qq sshpass
 
 script:
+  - npm run test
   - ./devops/build_me.sh
