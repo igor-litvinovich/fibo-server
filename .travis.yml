@@ -11,4 +11,6 @@ before_script:
 
 script:
   - npm run test
+  - ./devops/build_me.sh
+  - ./devops/push_me.sh
   - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin&&docker run --rm --env 'NODE_ENV=development' -p 8080:8080 -it igorlitv/fibo-server:latest

@@ -3,7 +3,7 @@ const express = require('express');
 const config = require('config');
 const { fibo } = require('./fibo');
 
-const {History} = require('./db');
+//const {History} = require('./db');
 
 const app = express();
 
