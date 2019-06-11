@@ -7,8 +7,9 @@ services:
 before_script:
   - chmod +x ./devops/build_me.sh
   - chmod +x ./devops/push_me.sh
+  - chmod +x ./devops/run_me.sh
   - sudo apt-get install -qq sshpass
 
 script:
   - npm run test
-  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "sudo docker pull igorlitv/fibo-server:latest && sudo docker run -d --rm --env 'NODE_ENV=development' -p 8080:8080 igorlitv/fibo-server:latest"
+  - ./devops/run_me.sh
