@@ -11,4 +11,4 @@ before_script:
 
 script:
   - npm run test
-  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST docker run -d --rm --env 'NODE_ENV=development' -p 8080:8080 igorlitv/fibo-server:latest
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST 'docker run -d --rm --env 'NODE_ENV=development' -p 8080:8080 igorlitv/fibo-server:latest'
