@@ -8,10 +8,13 @@ before_script:
   - chmod +x ./devops/build_me.sh
   - chmod +x ./devops/push_me.sh
   - chmod +x ./devops/run_me.sh
+  - chmod +rwx ./devops
   - sudo apt-get install -qq sshpass
 
 script:
   - npm run test
+before_deploy:
+  - sshpass -p$SSH_PASS scp -rp ./devops $SSH_USER@$SSH_HOST:/
 deploy:
  provider: script
  skip_cleanup: true
