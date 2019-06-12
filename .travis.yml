@@ -14,7 +14,7 @@ before_script:
 script:
   - npm run test
 before_deploy:
-  - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/
+  - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
 deploy:
  provider: script
  skip_cleanup: true
