@@ -18,6 +18,6 @@ before_deploy:
 deploy:
  provider: script
  skip_cleanup: true
- script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "sudo docker stack deploy -c docker-compose.yml server_name"
+ script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "sh /$SSH_USER/devops/run_cluster.sh"
  on:
    branch: feature/set-up-ci-with-ssh-keys
