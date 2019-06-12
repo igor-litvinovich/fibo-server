@@ -19,6 +19,6 @@ before_deploy:
 deploy:
  provider: script
  skip_cleanup: true
- script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "cd/$SSH_USER/devops/ && sh /$SSH_USER/devops/run_cluster.sh"
+ script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "cd /$SSH_USER/devops/ && sh /$SSH_USER/devops/run_cluster.sh"
  on:
    branch: feature/set-up-ci-with-ssh-keys
