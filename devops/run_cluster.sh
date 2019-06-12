@@ -1,3 +1,3 @@
 #!/bin/bash
-
-docker stack deploy -c docker-compose.yml server_name
+docker-compose pull
+docker stack deploy -c devops/docker-compose.yml server_name
