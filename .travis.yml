@@ -16,6 +16,7 @@ script:
   - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
 before_deploy:
   - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "chmod +rwx ./devops"
 deploy:
  provider: script
  skip_cleanup: true
