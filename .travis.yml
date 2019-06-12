@@ -13,10 +13,10 @@ before_script:
 script:
   - npm run test
 before_deploy:
-  - sshpass -p$SSH_PASS scp -rp ./devops $SSH_USER@$SSH_HOST:/deploy/
+  - sshpass -p$SSH_PASS scp -rp ./devops $SSH_USER@$SSH_HOST:/
 deploy:
  provider: script
  skip_cleanup: true
- script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "sudo docker ps"
+ script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "cd /devops && ls"
  on:
    branch: feature/set-up-ci-with-ssh-keys
