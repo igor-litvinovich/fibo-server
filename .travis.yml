@@ -12,6 +12,8 @@ before_script:
 
 script:
   - npm run test
+  - ./devops/build_me.sh
+  - ./devops/push_me.sh
 deploy:
  provider: script
  skip_cleanup: true
