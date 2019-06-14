@@ -22,7 +22,7 @@ before_deploy:
 deploy:
  provider: script
  skip_cleanup: true
- script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
+ script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
  on:
    branch: feature/set-up-ci-with-ssh-keys
  wait-until-deployed: true
