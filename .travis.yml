@@ -25,4 +25,4 @@ deploy:
  script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
  on:
    branch: feature/set-up-ci-with-ssh-keys
-   condition: tag IS present
+   condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
