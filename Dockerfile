@@ -1,9 +1,8 @@
 # Using an appropriate base image
 FROM node:10.15
-# Set up entrypoint
-ENTRYPOINT ["sh", "/server/docker-entrypoint.sh"]
-#The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. 
-EXPOSE 8080  
+
+#The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime.
+EXPOSE 8080
 
 # Create app directory
 WORKDIR /server
@@ -18,3 +17,5 @@ RUN npm install
 COPY . /server
 
 RUN chmod +x docker-entrypoint.sh
+
+CMD ["sh", "/server/docker-entrypoint.sh"]
