@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "10"
+services:
+  - docker
+
+before_script:
+  - chmod +x ./devops/build_me.sh
+  - chmod +x ./devops/push_me.sh
+  - chmod +x ./devops/run_me.sh
+  - chmod +rwx ./devops
+  - sudo apt-get install -qq sshpass
+
+script:
+  - npm run test
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
+before_deploy:
+  - ./devops/build_me.sh
+  - ./devops/push_me.sh
+  - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
+  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "chmod +rwx ./devops/run_cluster.sh"
+deploy:
+ provider: script
+ skip_cleanup: true
+ script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
+ on:
+   branch: feature/set-up-ci-with-ssh-keys

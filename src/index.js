@@ -3,7 +3,7 @@ const express = require('express');
 const config = require('config');
 const { fibo } = require('./fibo');
 
-const {History} = require('./db');
+//const {History} = require('./db');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.get('/fibo', async (req, res) => {
         result: number,
         createdDate: new Date()
     });*/
-    res.json({ number });
+    res.json({ number, version: '1.1.2' });
 });
 
 const port = config.get('server.port');
