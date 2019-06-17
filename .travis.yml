@@ -29,6 +29,7 @@ deploy:
     on:
       branch: develop
   - provider: script
+    skip_cleanup: true
     script: ./devops/heroku/release_heroku.sh
     on:
       branch: master
