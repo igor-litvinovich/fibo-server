@@ -5,11 +5,7 @@ services:
   - docker
 
 before_script:
-  - chmod +x ./devops/build_me.sh
-  - chmod +x ./devops/push_me.sh
-  - chmod +x ./devops/run_me.sh
-  - chmod +x ./devops/heroku/release_heroku.sh
-  - chmod +rwx ./devops
+  - chmod -R +rwx ./devops
   - sudo apt-get install -qq sshpass
 
 script:
