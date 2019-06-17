@@ -8,6 +8,7 @@ before_script:
   - chmod +x ./devops/build_me.sh
   - chmod +x ./devops/push_me.sh
   - chmod +x ./devops/run_me.sh
+  - chmod +x ./devops/heroku/release_heroku.sh
   - chmod +rwx ./devops
   - sudo apt-get install -qq sshpass
 
@@ -19,9 +20,19 @@ before_deploy:
   - ./devops/push_me.sh
   - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
   - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "chmod +rwx ./devops/run_cluster.sh"
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+
 deploy:
- provider: script
- skip_cleanup: true
- script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
- on:
-   branch: feature/set-up-ci-with-ssh-keys
+  - provider: script
+    skip_cleanup: true
+    script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
+    on:
+      branch: develop
+  - provider: script
+    script: ./devops/heroku/release_heroku.sh
+    on:
+      branch: master
+      tags: true
+
+

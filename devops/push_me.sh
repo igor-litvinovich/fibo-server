@@ -2,4 +2,9 @@
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-docker push igorlitv/fibo-server:latest
+TAG=$1
+if [[ -z ${TAG} ]]; then
+    TAG="${TRAVIS_TAG:-latest}"
+fi
+
+docker push igorlitv/fibo-server:${TAG}
