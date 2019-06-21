@@ -12,17 +12,16 @@ script:
 - ssh -i travis_key -tt -tt $SSH_USER@$SSH_HOST "echo
   \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
 before_deploy:
-- echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - "./devops/build_me.sh"
 - "./devops/push_me.sh"
 - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
-- ssh -i travis_key -tt -tt $SSH_USER@$SSH_HOST "chmod
+- ssh -i travis_key -tt  $SSH_USER@$SSH_HOST "chmod
   +rwx ./devops/run_cluster.sh"
 - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 deploy:
 - provider: script
   skip_cleanup: true
-  script: ssh -i travis_key -tt -tt $SSH_USER@$SSH_HOST
+  script: ssh -i travis_key -tt $SSH_USER@$SSH_HOST
     "./devops/run_cluster.sh"
   on:
     branch: develop
@@ -36,3 +35,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_b334a0a9658a_key -iv $encrypted_b334a0a9658a_iv
   -in travis_key.enc -out travis_key
   -d
+- eval "$(ssh-agent -s)"
+- chmod +rwx ./travis_key
+- ssh-add ./travis_key
+- echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config  
