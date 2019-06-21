@@ -13,13 +13,13 @@ script:
 before_deploy:
 - "./devops/build_me.sh"
 - "./devops/push_me.sh"
-- sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
-- ssh -i travis_key -o StrictHostKeyChecking=no -tt  $SSH_USER@$SSH_HOST "chmod +rwx ./devops/run_cluster.sh"
+- scp -i travis_key -o StrictHostKeyChecking=no -rp ./devops/run_cluster.sh $SSH_USER@$SSH_HOST:/$SSH_USER/run_cluster.sh
+- ssh -i travis_key -o StrictHostKeyChecking=no -tt  $SSH_USER@$SSH_HOST "chmod +rwx ./run_cluster.sh"
 - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 deploy:
 - provider: script
   skip_cleanup: true
-  script: ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
+  script: ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./run_cluster.sh"
   on:
     branch: develop
 - provider: script
