@@ -3,26 +3,23 @@ node_js:
 - '10'
 services:
 - docker
-
 before_script:
 - chmod -R +rwx ./devops
 - sudo apt-get install -qq sshpass
 script:
 - npm run test
-- ssh -i travis_key -tt -tt $SSH_USER@$SSH_HOST "echo
-  \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
+- ssh -i travis_key -tt -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker
+  login -u \"$DOCKER_USERNAME\" --password-stdin"
 before_deploy:
 - "./devops/build_me.sh"
 - "./devops/push_me.sh"
 - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
-- ssh -i travis_key -tt  $SSH_USER@$SSH_HOST "chmod
-  +rwx ./devops/run_cluster.sh"
+- ssh -i travis_key -tt  $SSH_USER@$SSH_HOST "chmod +rwx ./devops/run_cluster.sh"
 - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 deploy:
 - provider: script
   skip_cleanup: true
-  script: ssh -i travis_key -tt $SSH_USER@$SSH_HOST
-    "./devops/run_cluster.sh"
+  script: ssh -i travis_key -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
   on:
     branch: develop
 - provider: script
@@ -32,10 +29,11 @@ deploy:
     branch: master
     tags: true
 before_install:
+- openssl aes-256-cbc -K $encrypted_962bc74ba9d3_key -iv $encrypted_962bc74ba9d3_iv
+  -in travis_key.enc -out /home/travis_key -d
 - openssl aes-256-cbc -K $encrypted_b334a0a9658a_key -iv $encrypted_b334a0a9658a_iv
-  -in ./travis_key.enc -out ./travis_key
-  -d
+  -in ./travis_key.enc -out ./travis_key -d
 - eval "$(ssh-agent -s)"
 - chmod +rwx ./travis_key
 - ssh-add ./travis_key
-- echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config  
+- echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
