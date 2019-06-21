@@ -18,7 +18,7 @@ app.get('/fibo', async (req, res) => {
         result: number,
         createdDate: new Date()
     });*/
-    res.json({ number, version: '1.1.19' });
+    res.json({ number, version: '1.1.20' });
 });
 
 const port = config.get('server.port');
