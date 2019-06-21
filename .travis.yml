@@ -5,7 +5,6 @@ services:
 - docker
 before_script:
 - chmod -R +rwx ./devops
-- sudo apt-get install -qq sshpass
 script:
 - npm run test
 - ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker
