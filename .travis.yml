@@ -1,34 +1,34 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
 services:
-  - docker
-
+- docker
+before_install:
+- openssl aes-256-cbc -K $encrypted_962bc74ba9d3_key -iv $encrypted_962bc74ba9d3_iv
+  -in travis_key.enc -out travis_key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./travis_key
+- ssh-add ./travis_key
 before_script:
-  - chmod -R +rwx ./devops
-  - sudo apt-get install -qq sshpass
-
+- chmod -R +rwx ./devops
 script:
-  - npm run test
-  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
+- npm run test
 before_deploy:
-  - ./devops/build_me.sh
-  - ./devops/push_me.sh
-  - sshpass -p$SSH_PASS scp -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER/
-  - sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "chmod +rwx ./devops/run_cluster.sh"
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-
+- "./devops/build_me.sh"
+- "./devops/push_me.sh"
+- scp -i travis_key -o StrictHostKeyChecking=no -rp ./devops $SSH_USER@$SSH_HOST:/$SSH_USER
+- ssh -i travis_key -o StrictHostKeyChecking=no -tt  $SSH_USER@$SSH_HOST "chmod +rwx ./run_cluster.sh"
+- ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "echo \"$DOCKER_PASSWORD\" | docker
+  login -u \"$DOCKER_USERNAME\" --password-stdin"
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: sshpass -p$SSH_PASS ssh -o stricthostkeychecking=no -f -tt $SSH_USER@$SSH_HOST "nohup ./devops/run_cluster.sh" > /dev/null && echo "Your application is up and running"
-    on:
-      branch: develop
-  - provider: script
-    skip_cleanup: true
-    script: ./devops/heroku/release_heroku.sh
-    on:
-      branch: master
-      tags: true
-
-
+- provider: script
+  skip_cleanup: true
+  script: ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./run_cluster.sh"
+  on:
+    branch: develop
+- provider: script
+  skip_cleanup: true
+  script: "./devops/heroku/release_heroku.sh"
+  on:
+    branch: master
+    tags: true
