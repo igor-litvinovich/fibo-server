@@ -30,9 +30,7 @@ deploy:
     tags: true
 before_install:
 - openssl aes-256-cbc -K $encrypted_962bc74ba9d3_key -iv $encrypted_962bc74ba9d3_iv
-  -in travis_key.enc -out /home/travis_key -d
-- openssl aes-256-cbc -K $encrypted_b334a0a9658a_key -iv $encrypted_b334a0a9658a_iv
-  -in ./travis_key.enc -out ./travis_key -d
+  -in travis_key.enc -out travis_key -d
 - eval "$(ssh-agent -s)"
 - chmod +rwx ./travis_key
 - ssh-add ./travis_key
