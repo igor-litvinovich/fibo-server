@@ -9,16 +9,13 @@ const app = express();
 
 app.get('/fibo', async (req, res) => {
     const { after } = req.query;
-    const hrstart = process.hrtime();
-
+    if(!after || after > 15) {
+        res.status(500).json({
+            message: "after parameter should be less than 15"
+        })
+    }
     const number = fibo(Number.parseInt(after));
-    const hrend = process.hrtime(hrstart);
-   // console.info('Execution time : %ds %dms', hrend[0], hrend[1] / 1000000);
-    /*await History.create({
-        result: number,
-        createdDate: new Date()
-    });*/
-    res.json({ number, version: '1.1.20' });
+    res.json({ number, version: '1.1.21' });
 });
 
 const port = config.get('server.port');
