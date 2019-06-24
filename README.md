@@ -1,11 +1,12 @@
 # This server provides an API to calculate the next number in the Fibonacci sequence
 
-##API
-|URL|Method|Params|
-|---|------|------|
-| /fibo| GET| after:Number
+## API
 
-##ENVIRONMENTS
+|URL|Method|Params|
+|---|:----:|:----:|
+| /fibo| GET| after:Number |
+
+## ENVIRONMENTS
 
 |NAME|URL|
 |----|---|
