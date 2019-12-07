@@ -14,7 +14,7 @@ before_deploy:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: ssh -i travis_deploy_key.pem -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
+  script: ssh -i ./travis_deploy_key.pem -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
   on:
     branch: develop
 - provider: script
