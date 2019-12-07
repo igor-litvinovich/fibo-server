@@ -1,5 +1,5 @@
 #!/bin/bash
-openssl aes-256-cbc -K $encrypted_b334a0a9658a_key -iv $encrypted_b334a0a9658a_iv -in travis_deploy_key.pem.enc -out travis_deploy_key.pem -d
+openssl aes-256-cbc -K $encrypted_bf7b528e85e7_key -iv $encrypted_bf7b528e85e7_iv -in travis_deploy_key.pem.enc -out travis_deploy_key.pem -d
 chmod 600 ./travis_deploy_key.pem
 ssh-add ./travis_deploy_key.pem
 
