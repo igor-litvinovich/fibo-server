@@ -10,5 +10,5 @@
 
 |NAME|URL|
 |----|---|
-|DEV|[http://165.22.52.60:8080/fibo?after=13](http://165.22.52.60:8080/fibo?after=13)
+|DEV|[http://157.230.19.19:8080/fibo?after=13](http://157.230.19.19:8080/fibo?after=13)
 |PROD|[https://fibo-server.herokuapp.com/fibo?after=13](https://fibo-server.herokuapp.com/fibo?after=13)
