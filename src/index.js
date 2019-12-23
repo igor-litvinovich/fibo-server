@@ -7,15 +7,15 @@ const { fibo } = require('./fibo');
 
 const app = express();
 
-app.get('/fibo', async (req, res) => {
+app.get('/fibo', async(req, res) => {
     const { after } = req.query;
-    if(!after || after > 15) {
+    if (!after || after > 15) {
         res.status(500).json({
             message: "after parameter should be less than 15"
         })
     }
     const number = fibo(Number.parseInt(after));
-    res.json({ number, version: '2.1.1' });
+    res.json({ number, version: '2.1.2' });
 });
 
 const port = config.get('server.port');
