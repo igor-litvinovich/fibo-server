@@ -30,4 +30,5 @@ jobs:
         TAG: ${{ steps.get_version.outputs.VERSION }}
         HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: sh ./devops/heroku/release_heroku.sh
