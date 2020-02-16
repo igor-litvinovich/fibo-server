@@ -14,3 +14,8 @@ jobs:
       run: chmod -R +rwx ./devops
     - name: Build a docker image
       run: sh ./devops/build_me.sh latest
+    - name: Push a docker image to DockerHub
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: sh ./devops/push_me.sh latest
