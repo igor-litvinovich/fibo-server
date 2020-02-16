@@ -1,0 +1,27 @@
+name: DEPLOY-PROD
+
+on:
+  create:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Grant permissions
+      run: chmod +rwx ./devops/heroku/release_heroku.sh
+    - name: Build a docker image
+      run: sh ./devops/build_me.sh latest
+    - name: Push a docker image to DockerHub
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: sh ./devops/push_me.sh ${{ context.payload.ref }}
+    - name: Deploy to Production
+      env:
+        TAG: ${{ context.payload.ref }}
+        HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      run: sh ./devops/heroku/release_heroku.sh
