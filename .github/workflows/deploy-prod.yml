@@ -8,7 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Login to Heroku
-      run: docker login --username="$HEROKU_USERNAME" --password-stdin < echo "$(heroku auth:token)" registry.heroku.com    
+      env:
+        HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: docker login --username="$HEROKU_USERNAME" --password-stdin < echo "$HEROKU_API_KEY" registry.heroku.com    
     - name: Get the release version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
