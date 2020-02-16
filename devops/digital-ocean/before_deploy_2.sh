@@ -1,4 +1,5 @@
 #!/bin/bash
+openssl aes-256-cbc -K $encrypted_962bc74ba9d3_key -iv $encrypted_962bc74ba9d3_iv -in travis_key.enc -out travis_key -d
 chmod 600 ./travis_key
 ssh-add ./travis_key
 

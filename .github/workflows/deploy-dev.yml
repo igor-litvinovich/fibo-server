@@ -19,3 +19,15 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: sh ./devops/push_me.sh latest
+    - name: Restore .ssh key from env variable
+      env:
+        SSH_CERT: ${{ secrets.SSH_CERT }}
+      run: echo "$SSH_CERT" > ./travis_key    
+    - name: Before deploy
+      env:
+        SSH_CERT: ${{ secrets.SSH_CERT }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: sh ./devops/digital-ocean/before_deploy.sh
