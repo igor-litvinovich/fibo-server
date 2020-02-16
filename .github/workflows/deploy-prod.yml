@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Login to Heroku
+      run: docker login -u "$HEROKU_USERNAME" --p $(heroku auth:token) registry.heroku.com    
     - name: Get the release version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
@@ -25,8 +27,6 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: sh ./devops/push_me.sh $TAG
-    - name: Login to Heroku
-      run: docker login --username="$HEROKU_USERNAME" --password=$(heroku auth:token) registry.heroku.com  
     - name: Deploy to Production
       env:
         TAG: ${{ steps.get_version.outputs.VERSION }}
