@@ -13,15 +13,18 @@ jobs:
     - name: Grant permissions
       run: chmod +rwx ./devops/heroku/release_heroku.sh
     - name: Build a docker image
-      run: sh ./devops/build_me.sh $GITHUB_REF
+      env:
+        TAG: ${GITHUB_REF/refs\/tags\//}
+      run: sh ./devops/build_me.sh $TAG
     - name: Push a docker image to DockerHub
       env:
+        TAG: ${GITHUB_REF/refs\/tags\//}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: sh ./devops/push_me.sh $GITHUB_REF
+      run: sh ./devops/push_me.sh $TAG
     - name: Deploy to Production
       env:
-        TAG: $GITHUB_REF
+        TAG: ${GITHUB_REF/refs\/tags\//}
         HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: sh ./devops/heroku/release_heroku.sh
