@@ -13,4 +13,4 @@ jobs:
     - name: Grant permissions
       run: chmod -R +rwx ./devops
     - name: Build a docker image
-      run: sh ./devops/build_me.sh
+      run: sh ./devops/build_me.sh latest
