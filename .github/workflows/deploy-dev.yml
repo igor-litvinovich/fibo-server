@@ -30,4 +30,12 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: sh ./devops/digital-ocean/before_deploy.sh
+      run: sh ./devops/digital-ocean/before_deploy_2.sh
+    - name: Deploy to dev
+      env:
+        SSH_CERT: ${{ secrets.SSH_CERT }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: ssh -i travis_key -o StrictHostKeyChecking=no -tt $SSH_USER@$SSH_HOST "./devops/run_cluster.sh"
