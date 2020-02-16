@@ -10,21 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Get the release version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     - name: Grant permissions
       run: chmod +rwx ./devops/heroku/release_heroku.sh
     - name: Build a docker image
       env:
-        TAG: ${GITHUB_REF/refs\/tags\//}
+        TAG: ${{ steps.get_version.outputs.VERSION }}
       run: sh ./devops/build_me.sh $TAG
     - name: Push a docker image to DockerHub
       env:
-        TAG: ${GITHUB_REF/refs\/tags\//}
+        TAG: ${{ steps.get_version.outputs.VERSION }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: sh ./devops/push_me.sh $TAG
     - name: Deploy to Production
       env:
-        TAG: ${GITHUB_REF/refs\/tags\//}
+        TAG: ${{ steps.get_version.outputs.VERSION }}
         HEROKU_USERNAME: ${{ secrets.HEROKU_USERNAME }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: sh ./devops/heroku/release_heroku.sh
