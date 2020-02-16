@@ -25,6 +25,8 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: sh ./devops/push_me.sh $TAG
+    - name: Login to Heroku
+      run: docker login --username="$HEROKU_USERNAME" --password=$(heroku auth:token) registry.heroku.com  
     - name: Deploy to Production
       env:
         TAG: ${{ steps.get_version.outputs.VERSION }}
