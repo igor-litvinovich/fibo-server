@@ -1,6 +1,9 @@
 name: DEPLOY-PROD
 
-on: [push]
+on:
+  create:
+    branches:
+    - master
 
 jobs:
   build:
