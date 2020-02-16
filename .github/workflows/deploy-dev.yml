@@ -1,0 +1,16 @@
+name: DEPLOY-DEV
+
+on:
+  push:
+    branches:
+    - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Grant permissions
+      run: chmod -R +rwx ./devops
+    - name: Build a docker image
+      run: sh ./devops/build_me.sh
