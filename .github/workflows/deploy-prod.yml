@@ -13,7 +13,7 @@ jobs:
     - name: Grant permissions
       run: chmod +rwx ./devops/heroku/release_heroku.sh
     - name: Build a docker image
-      run: sh ./devops/build_me.sh latest
+      run: sh ./devops/build_me.sh $GITHUB_REF
     - name: Push a docker image to DockerHub
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
